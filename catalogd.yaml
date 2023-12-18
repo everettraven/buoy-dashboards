@@ -1,0 +1,49 @@
+panels:
+  - name: Catalogs
+    group: catalogd.operatorframework.io
+    version: v1alpha1
+    kind: Catalog
+    type: table
+    columns:
+      - header: Name
+        path: metadata.name
+      - header: Image Ref
+        path: spec.source.image.ref
+      - header: Phase
+        path: status.phase
+      - header: Resolved Ref
+        path: status.resolvedSource.image.resolvedRef
+      - header: Content URL
+        path: status.contentURL
+  - name: Catalogd Controller Manager
+    group: apps
+    version: v1
+    kind: Deployment
+    type: item
+    key:
+      namespace: catalogd-system
+      name: catalogd-controller-manager
+  - name: Catalogd Controller Manager Logs
+    group: apps
+    version: v1
+    kind: Deployment
+    type: logs
+    container: manager
+    key:
+      namespace: catalogd-system
+      name: catalogd-controller-manager
+  - name: Catalogd Pods
+    group: ""
+    version: v1
+    kind: Pod
+    type: table
+    namespace: catalogd-system
+    columns:
+      - header: Name
+        path: metadata.name
+      - header: Phase
+        path: status.phase
+      - header: Reason
+        path: status.reason
+      - header: Message
+        path: status.message
