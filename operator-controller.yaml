@@ -9,12 +9,14 @@ panels:
         path: metadata.name
       - header: Version Range
         path: spec.version
-      - header: Installed?
+      - header: Installed
         path: status.conditions.#(type=="Installed")#.status|0
       - header: Installed Reason
         path: status.conditions.#(type=="Installed")#.reason|0
       - header: Installed Bundle
         path: status.installedBundleResource
+      - header: Deprecated
+        path: status.conditions.#(type=="Deprecated")#.status|0
   - name: OC Controller Manager
     group: apps
     version: v1
@@ -63,3 +65,19 @@ panels:
         path: status.resolvedSource.image.resolvedRef
       - header: Content URL
         path: status.contentURL
+  - name: BundleDeployments
+    group: core.rukpak.io
+    version: v1alpha2
+    kind: BundleDeployment
+    type: table
+    columns:
+      - header: Name
+        path: metadata.name
+      - header: Associated ClusterExtension
+        path: metadata.ownerReferences.#(kind=="ClusterExtension")#.name|0
+      - header: Unpacked
+        path: status.conditions.#(type=="Unpacked")#.status|0
+      - header: Installed
+        path: status.conditions.#(type=="Installed")#.status|0
+      - header: Healthy
+        path: status.conditions.#(type=="Healthy")#.status|0
